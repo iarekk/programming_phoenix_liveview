@@ -5,6 +5,14 @@ defmodule PentoWeb.WrongLive do
     {:ok, assign(socket, score: 0, message: "Make a guess:")}
   end
 
+  def handle_event("guess", %{"number" => number}, socket) do
+    score = socket.assigns.score - 1
+    message = "You guessed #{number}. It is wrong. Guess again."
+
+    # what's the difference between :reply and :noreply?
+    {:noreply, assign(socket, message: message, score: score)}
+  end
+
   def render(assigns) do
     ~H"""
     <h1 class="mb-4 text-4xl font-extrabold">Your score: <%= @score %></h1>
