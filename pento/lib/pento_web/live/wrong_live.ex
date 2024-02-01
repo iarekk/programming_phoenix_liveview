@@ -15,30 +15,29 @@ defmodule PentoWeb.WrongLive do
       ) do
     guess = number |> String.to_integer()
 
-    {:noreply, assign(socket, update_state(to_guess, guess, score))}
+    {:noreply, assign(socket, update_state(to_guess, guess, score) |> with_time())}
   end
 
   def handle_params(_unsigned_params, _uri, socket) do
-    {:noreply, assign(socket, initial_state(get_random_number()))}
+    {:noreply, assign(socket, initial_state(get_random_number()) |> with_time())}
   end
 
   def initial_state(random_number) when random_number in 1..10 do
-    # with_time is stateful, I wonder if there is a better way to add such aspects to models
-    %{score: 0, message: "Make a guess:", to_guess: random_number, game_won: false} |> with_time()
+    %{score: 0, message: "Make a guess:", to_guess: random_number, game_won: false}
   end
 
   def update_state(to_guess, guess, curent_score) when to_guess == guess do
     message = "You guessed #{guess}. Correct!"
     score = curent_score + 10
 
-    %{message: message, score: score, game_won: true} |> with_time()
+    %{message: message, score: score, game_won: true}
   end
 
   def update_state(to_guess, guess, current_score) do
     message = make_hint(to_guess, guess)
     score = current_score - 1
 
-    %{message: message, score: score} |> with_time()
+    %{message: message, score: score}
   end
 
   def make_hint(to_guess, guess) when to_guess > guess do
