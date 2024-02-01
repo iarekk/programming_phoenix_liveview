@@ -6,12 +6,14 @@ defmodule PentoWeb.WrongLive do
     {:ok, assign(socket, initial_state(get_random_number()))}
   end
 
-  def handle_event("guess", %{"number" => number}, socket) do
-    to_guess = socket.assigns.to_guess
-    score = socket.assigns.score
+  def handle_event(
+        "guess",
+        %{"number" => number},
+        %Phoenix.LiveView.Socket{
+          assigns: %{to_guess: to_guess, score: score}
+        } = socket
+      ) do
     guess = number |> String.to_integer()
-
-    Logger.info("to_guess: #{inspect(to_guess)}, number: #{inspect(number)}")
 
     {:noreply, assign(socket, update_state(to_guess, guess, score))}
   end
