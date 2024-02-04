@@ -1,5 +1,5 @@
 defmodule Pento.Core.NumberTest do
-  alias Pento.Core.Number, as: Number
+  alias Pento.Core.Number
 
   use ExUnit.Case
 
