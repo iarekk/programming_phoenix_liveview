@@ -3,6 +3,8 @@ defmodule PentoWeb.WrongLive do
   use PentoWeb, :live_view
 
   def mount(_params, _session, socket) do
+    # Logger.info("assigns: #{inspect(socket.assigns)}")
+
     {:ok, assign(socket, initial_state(get_random_number()))}
   end
 
@@ -58,7 +60,13 @@ defmodule PentoWeb.WrongLive do
     <h1 class="mb-4 text-4xl font-extrabold">Your score: <%= @score %></h1>
 
     <h2>
-      <%= @message %> It's <%= @time %>.
+      Hello
+      <%= if @current_user do %>
+        <%= @current_user.email %>,
+      <% else %>
+        anonymous user,
+      <% end %>
+      <%= @message %> it's <%= @time %>.
     </h2>
     <br />
     <h2>

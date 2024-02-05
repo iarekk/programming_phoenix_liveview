@@ -22,7 +22,11 @@ defmodule PentoWeb.Router do
 
     get "/", PageController, :home
     get "/lolz", PageController, :lolz
-    live "/guess", WrongLive
+
+    live_session :fetch_current_user,
+      on_mount: [{PentoWeb.UserAuth, :mount_current_user}] do
+      live "/guess", WrongLive
+    end
   end
 
   # Other scopes may use custom stacks.
