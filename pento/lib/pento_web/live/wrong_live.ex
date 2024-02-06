@@ -62,7 +62,7 @@ defmodule PentoWeb.WrongLive do
     <h2>
       Hello
       <%= if @current_user do %>
-        <%= @current_user.email %>,
+        <%= @current_user.username %>,
       <% else %>
         anonymous user,
       <% end %>
