@@ -25,11 +25,11 @@ defmodule PentoWeb.WrongLive do
   end
 
   def initial_state(random_number) when random_number in 1..10 do
-    %{score: 0, message: "Make a guess:", to_guess: random_number, game_won: false}
+    %{score: 0, message: "make a guess:", to_guess: random_number, game_won: false}
   end
 
   def update_state(to_guess, guess, curent_score) when to_guess == guess do
-    message = "You guessed #{guess}. Correct!"
+    message = "you guessed #{guess}. Correct!"
     score = curent_score + 10
 
     %{message: message, score: score, game_won: true}
@@ -43,11 +43,11 @@ defmodule PentoWeb.WrongLive do
   end
 
   def make_hint(to_guess, guess) when to_guess > guess do
-    "You guessed #{guess}. Too low! Try again."
+    "you guessed #{guess}. Too low! Try again."
   end
 
   def make_hint(to_guess, guess) when to_guess < guess do
-    "You guessed #{guess}. Too high! Try again."
+    "you guessed #{guess}. Too high! Try again."
   end
 
   def with_time(state), do: state |> Map.put(:time, time())
@@ -62,7 +62,7 @@ defmodule PentoWeb.WrongLive do
     <h2>
       Hello
       <%= if @current_user do %>
-        <%= @current_user.email %>,
+        <%= @current_user.username %>,
       <% else %>
         anonymous user,
       <% end %>
