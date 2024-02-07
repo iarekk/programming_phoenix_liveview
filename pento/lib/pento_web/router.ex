@@ -18,9 +18,14 @@ defmodule PentoWeb.Router do
   end
 
   scope "/", PentoWeb do
-    pipe_through :browser
+    pipe_through [:browser, :redirect_to_guess_if_authenticated]
 
     get "/", PageController, :home
+  end
+
+  scope "/", PentoWeb do
+    pipe_through :browser
+
     get "/lolz", PageController, :lolz
   end
 
