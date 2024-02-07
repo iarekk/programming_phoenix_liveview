@@ -194,6 +194,19 @@ defmodule PentoWeb.UserAuth do
   end
 
   @doc """
+  Implemented with advice from here: https://elixirforum.com/t/how-to-redirect-a-logged-in-users-route-to-another/56930/4
+  """
+  def redirect_to_guess_if_authenticated(conn, _opts) do
+    if conn.assigns[:current_user] do
+      conn
+      |> redirect(to: ~p"/guess")
+      |> halt()
+    else
+      conn
+    end
+  end
+
+  @doc """
   Used for routes that require the user to be authenticated.
 
   If you want to enforce the user email is confirmed before
