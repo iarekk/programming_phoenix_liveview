@@ -20,6 +20,12 @@ defmodule PentoWeb.ProductLive.Index do
     |> assign(:product, Catalog.get_product!(id))
   end
 
+  defp apply_action(socket, :markdown, %{"id" => id}) do
+    socket
+    |> assign(:page_title, "Mark Down Product")
+    |> assign(:product, Catalog.get_product!(id) |> Catalog.add_discount(0.1))
+  end
+
   defp apply_action(socket, :new, _params) do
     socket
     |> assign(:page_title, "New Product")

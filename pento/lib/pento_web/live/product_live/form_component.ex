@@ -4,7 +4,7 @@ defmodule PentoWeb.ProductLive.FormComponent do
   alias Pento.Catalog
 
   @impl true
-  def render(assigns) do
+  def render(%{action: :edit} = assigns) do
     ~H"""
     <div>
       <.header>
@@ -25,6 +25,35 @@ defmodule PentoWeb.ProductLive.FormComponent do
         <.input field={@form[:sku]} type="number" label="Sku" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Product</.button>
+        </:actions>
+      </.simple_form>
+    </div>
+    """
+  end
+
+  def render(%{action: :markdown, product: product} = assigns) do
+    ~H"""
+    <div>
+      <.header>
+        <%= @title %>
+        <:subtitle>Use this form to mark down products.</:subtitle>
+      </.header>
+
+      <.simple_form
+        for={@form}
+        id="product-form"
+        phx-target={@myself}
+        phx-change="validate"
+        phx-submit="save"
+      >
+        <div><span>Name</span>:<%= product.name %></div>
+        <div><span>Description</span>:<%= product.description %></div>
+        <div><span>Unit price</span>:<%= product.unit_price %></div>
+        <div><span>Sku</span>:<%= product.sku %></div>
+
+        <.input field={@form[:markdown_amount]} type="number" label="Markdown amount" step="0.1" />
+        <:actions>
+          <.button phx-disable-with="Marking Down...">Mark Down Product</.button>
         </:actions>
       </.simple_form>
     </div>
@@ -63,6 +92,21 @@ defmodule PentoWeb.ProductLive.FormComponent do
         {:noreply,
          socket
          |> put_flash(:info, "Product updated successfully")
+         |> push_patch(to: socket.assigns.patch)}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign_form(socket, changeset)}
+    end
+  end
+
+  defp save_product(socket, :markdown, product_params) do
+    case Catalog.markdown_product(socket.assigns.product, product_params["markdown_amount"]) do
+      {:ok, product} ->
+        notify_parent({:saved, product})
+
+        {:noreply,
+         socket
+         |> put_flash(:info, "Product marked down successfully")
          |> push_patch(to: socket.assigns.patch)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
