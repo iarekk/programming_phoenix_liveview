@@ -22,6 +22,9 @@
     </div>
     <.link patch={~p"/products/#{product}/edit"}>Edit</.link>
   </:action>
+  <:action :let={{_id, product}}>
+    <.link patch={~p"/products/#{product}/markdown"}>Mark down</.link>
+  </:action>
   <:action :let={{id, product}}>
     <.link
       phx-click={JS.push("delete", value: %{id: product.id}) |> hide("##{id}")}
@@ -32,7 +35,12 @@
   </:action>
 </.table>
 
-<.modal :if={@live_action in [:new, :edit]} id="product-modal" show on_cancel={JS.patch(~p"/products")}>
+<.modal
+  :if={@live_action in [:new, :edit, :markdown]}
+  id="product-modal"
+  show
+  on_cancel={JS.patch(~p"/products")}
+>
   <.live_component
     module={PentoWeb.ProductLive.FormComponent}
     id={@product.id || :new}

@@ -18,4 +18,5 @@ defmodule PentoWeb.ProductLive.Show do
 
   defp page_title(:show), do: "Show Product"
   defp page_title(:edit), do: "Edit Product"
+  defp page_title(:markdown), do: "Mark Down Product"
 end

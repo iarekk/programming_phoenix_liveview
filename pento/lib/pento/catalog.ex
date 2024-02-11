@@ -4,6 +4,7 @@ defmodule Pento.Catalog do
   """
 
   import Ecto.Query, warn: false
+  alias Phoenix.LiveViewTest.Element
   alias Pento.Repo
 
   alias Pento.Catalog.Product
@@ -101,4 +102,21 @@ defmodule Pento.Catalog do
   def change_product(%Product{} = product, attrs \\ %{}) do
     Product.changeset(product, attrs)
   end
+
+  def markdown_product(%Product{unit_price: current_price} = product, price_decrease) do
+    new_price = current_price - get_as_decimal!(price_decrease |> IO.inspect(label: "GAD-pre"))
+    attrs = %{unit_price: new_price, markdown_product: true}
+
+    Product.changeset(product, attrs)
+    |> Repo.update()
+  end
+
+  def add_discount(%Product{unit_price: current_price} = product, discount_rate)
+      when discount_rate > 0.0 and discount_rate < 1.0 do
+    product |> Map.put(:markdown_amount, current_price * discount_rate)
+  end
+
+  def get_as_decimal!(s) when is_binary(s), do: Float.parse(s) |> elem(0)
+  def get_as_decimal!(f) when is_float(f), do: f
+  def get_as_decimal!(any), do: raise("Bad any #{inspect(any)}")
 end
