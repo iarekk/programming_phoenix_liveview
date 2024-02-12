@@ -11,7 +11,7 @@ defmodule Pento.Catalog.Product do
     timestamps()
   end
 
-  def changeset(product, %{unit_price: _, markdown_product: true} = attrs) do
+  def changeset(product, %{unit_price: _, mark_down_product: true} = attrs) do
     product
     |> cast(attrs, [:unit_price])
     |> validate_required([:unit_price])

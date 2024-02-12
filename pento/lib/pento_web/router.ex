@@ -79,11 +79,11 @@ defmodule PentoWeb.Router do
       live "/products", ProductLive.Index, :index
       live "/products/new", ProductLive.Index, :new
       live "/products/:id/edit", ProductLive.Index, :edit
-      live "/products/:id/markdown", ProductLive.Index, :markdown
+      live "/products/:id/mark_down", ProductLive.Index, :mark_down
 
       live "/products/:id", ProductLive.Show, :show
       live "/products/:id/show/edit", ProductLive.Show, :edit
-      live "/products/:id/show/markdown", ProductLive.Show, :markdown
+      live "/products/:id/show/mark_down", ProductLive.Show, :mark_down
     end
   end
 

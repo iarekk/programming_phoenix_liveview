@@ -20,7 +20,7 @@ defmodule PentoWeb.ProductLive.Index do
     |> assign(:product, Catalog.get_product!(id))
   end
 
-  defp apply_action(socket, :markdown, %{"id" => id}) do
+  defp apply_action(socket, :mark_down, %{"id" => id}) do
     socket
     |> assign(:page_title, "Mark Down Product")
     |> assign(:product, Catalog.get_product!(id) |> Catalog.add_discount(0.1))
