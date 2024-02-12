@@ -39,6 +39,13 @@ defmodule PentoWeb.ProductLive.FormComponent do
         <:subtitle>Use this form to mark down products.</:subtitle>
       </.header>
 
+      <.list>
+        <:item title="Name"><%= @product.name %></:item>
+        <:item title="Description"><%= @product.description %></:item>
+        <:item title="Unit price"><%= @product.unit_price %></:item>
+        <:item title="Sku"><%= @product.sku %></:item>
+      </.list>
+
       <.simple_form
         for={@form}
         id="product-form"
@@ -46,14 +53,10 @@ defmodule PentoWeb.ProductLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <div><span>Name</span>:<%= assigns.product.name %></div>
-        <div><span>Description</span>:<%= assigns.product.description %></div>
-        <div><span>Unit price</span>:<%= assigns.product.unit_price %></div>
-        <div><span>Sku</span>:<%= assigns.product.sku %></div>
-
         <.input field={@form[:mark_down_amount]} type="number" label="Mark Down Amount" step="0.1" />
+
         <:actions>
-          <.button phx-disable-with="Marking Down...">Mark Down Product</.button>
+          <.button phx-disable-with="Marking Down...">Mark Down product</.button>
         </:actions>
       </.simple_form>
     </div>
