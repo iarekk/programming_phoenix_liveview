@@ -4,7 +4,7 @@ defmodule PentoWeb.ProductLive.FormComponent do
   alias Pento.Catalog
 
   @impl true
-  def render(%{action: :edit} = assigns) do
+  def render(%{action: action} = assigns) when action in [:edit, :new] do
     ~H"""
     <div>
       <.header>
