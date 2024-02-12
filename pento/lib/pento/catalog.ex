@@ -103,8 +103,11 @@ defmodule Pento.Catalog do
     Product.changeset(product, attrs)
   end
 
-  def markdown_product(%Product{unit_price: current_price} = product, price_decrease) do
-    new_price = current_price - get_as_decimal!(price_decrease |> IO.inspect(label: "GAD-pre"))
+  def markdown_product(%Product{unit_price: current_price} = product, %{
+        "markdown_amount" => price_decrease_str
+      }) do
+    {price_decrease, ""} = Float.parse(price_decrease_str)
+    new_price = current_price - price_decrease
     attrs = %{unit_price: new_price, markdown_product: true}
 
     Product.changeset(product, attrs)
@@ -115,8 +118,4 @@ defmodule Pento.Catalog do
       when discount_rate > 0.0 and discount_rate < 1.0 do
     product |> Map.put(:markdown_amount, current_price * discount_rate)
   end
-
-  def get_as_decimal!(s) when is_binary(s), do: Float.parse(s) |> elem(0)
-  def get_as_decimal!(f) when is_float(f), do: f
-  def get_as_decimal!(any), do: raise("Bad any #{inspect(any)}")
 end

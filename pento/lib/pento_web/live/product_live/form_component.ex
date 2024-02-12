@@ -100,7 +100,7 @@ defmodule PentoWeb.ProductLive.FormComponent do
   end
 
   defp save_product(socket, :markdown, product_params) do
-    case Catalog.markdown_product(socket.assigns.product, product_params["markdown_amount"]) do
+    case Catalog.markdown_product(socket.assigns.product, product_params) do
       {:ok, product} ->
         notify_parent({:saved, product})
 
