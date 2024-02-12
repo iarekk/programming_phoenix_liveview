@@ -31,7 +31,7 @@ defmodule PentoWeb.ProductLive.FormComponent do
     """
   end
 
-  def render(%{action: :markdown, product: product} = assigns) do
+  def render(%{action: :markdown} = assigns) do
     ~H"""
     <div>
       <.header>
@@ -46,10 +46,10 @@ defmodule PentoWeb.ProductLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <div><span>Name</span>:<%= product.name %></div>
-        <div><span>Description</span>:<%= product.description %></div>
-        <div><span>Unit price</span>:<%= product.unit_price %></div>
-        <div><span>Sku</span>:<%= product.sku %></div>
+        <div><span>Name</span>:<%= assigns.product.name %></div>
+        <div><span>Description</span>:<%= assigns.product.description %></div>
+        <div><span>Unit price</span>:<%= assigns.product.unit_price %></div>
+        <div><span>Sku</span>:<%= assigns.product.sku %></div>
 
         <.input field={@form[:markdown_amount]} type="number" label="Markdown amount" step="0.1" />
         <:actions>
