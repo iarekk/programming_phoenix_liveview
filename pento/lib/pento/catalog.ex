@@ -4,7 +4,6 @@ defmodule Pento.Catalog do
   """
 
   import Ecto.Query, warn: false
-  alias Phoenix.LiveViewTest.Element
   alias Pento.Repo
 
   alias Pento.Catalog.Product
