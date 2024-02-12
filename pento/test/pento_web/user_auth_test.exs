@@ -1,9 +1,9 @@
 defmodule PentoWeb.UserAuthTest do
   use PentoWeb.ConnCase, async: true
 
-  alias Phoenix.LiveView
   alias Pento.Accounts
   alias PentoWeb.UserAuth
+  alias Phoenix.LiveView
   import Pento.AccountsFixtures
 
   @remember_me_cookie "_pento_web_user_remember_me"

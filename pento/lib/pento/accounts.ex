@@ -4,9 +4,8 @@ defmodule Pento.Accounts do
   """
 
   import Ecto.Query, warn: false
+  alias Pento.Accounts.{User, UserNotifier, UserToken}
   alias Pento.Repo
-
-  alias Pento.Accounts.{User, UserToken, UserNotifier}
 
   ## Database getters
 
