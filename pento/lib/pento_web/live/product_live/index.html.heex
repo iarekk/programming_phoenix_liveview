@@ -23,7 +23,7 @@
     <.link patch={~p"/products/#{product}/edit"}>Edit</.link>
   </:action>
   <:action :let={{_id, product}}>
-    <.link patch={~p"/products/#{product}/markdown"}>Mark down</.link>
+    <.link patch={~p"/products/#{product}/mark_down"}>Mark down</.link>
   </:action>
   <:action :let={{id, product}}>
     <.link
@@ -36,7 +36,7 @@
 </.table>
 
 <.modal
-  :if={@live_action in [:new, :edit, :markdown]}
+  :if={@live_action in [:new, :edit, :mark_down]}
   id="product-modal"
   show
   on_cancel={JS.patch(~p"/products")}

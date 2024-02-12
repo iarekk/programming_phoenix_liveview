@@ -31,7 +31,7 @@ defmodule PentoWeb.ProductLive.FormComponent do
     """
   end
 
-  def render(%{action: :markdown} = assigns) do
+  def render(%{action: :mark_down} = assigns) do
     ~H"""
     <div>
       <.header>
@@ -51,7 +51,7 @@ defmodule PentoWeb.ProductLive.FormComponent do
         <div><span>Unit price</span>:<%= assigns.product.unit_price %></div>
         <div><span>Sku</span>:<%= assigns.product.sku %></div>
 
-        <.input field={@form[:markdown_amount]} type="number" label="Markdown amount" step="0.1" />
+        <.input field={@form[:mark_down_amount]} type="number" label="Mark Down Amount" step="0.1" />
         <:actions>
           <.button phx-disable-with="Marking Down...">Mark Down Product</.button>
         </:actions>
@@ -99,8 +99,8 @@ defmodule PentoWeb.ProductLive.FormComponent do
     end
   end
 
-  defp save_product(socket, :markdown, product_params) do
-    case Catalog.markdown_product(socket.assigns.product, product_params) do
+  defp save_product(socket, :mark_down, product_params) do
+    case Catalog.mark_down_product(socket.assigns.product, product_params) do
       {:ok, product} ->
         notify_parent({:saved, product})
 

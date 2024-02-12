@@ -102,12 +102,12 @@ defmodule Pento.Catalog do
     Product.changeset(product, attrs)
   end
 
-  def markdown_product(%Product{unit_price: current_price} = product, %{
-        "markdown_amount" => price_decrease_str
+  def mark_down_product(%Product{unit_price: current_price} = product, %{
+        "mark_down_amount" => price_decrease_str
       }) do
     {price_decrease, ""} = Float.parse(price_decrease_str)
     new_price = current_price - price_decrease
-    attrs = %{unit_price: new_price, markdown_product: true}
+    attrs = %{unit_price: new_price, mark_down_product: true}
 
     Product.changeset(product, attrs)
     |> Repo.update()
@@ -115,6 +115,6 @@ defmodule Pento.Catalog do
 
   def add_discount(%Product{unit_price: current_price} = product, discount_rate)
       when discount_rate > 0.0 and discount_rate < 1.0 do
-    product |> Map.put(:markdown_amount, current_price * discount_rate)
+    product |> Map.put(:mark_down_amount, current_price * discount_rate)
   end
 end
