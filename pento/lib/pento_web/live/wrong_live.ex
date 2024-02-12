@@ -52,8 +52,8 @@ defmodule PentoWeb.WrongLive do
 
   def with_time(state), do: state |> Map.put(:time, time())
 
-  def time(), do: DateTime.utc_now() |> to_string()
-  def get_random_number(), do: Enum.random(1..10)
+  def time, do: DateTime.utc_now() |> to_string()
+  def get_random_number, do: Enum.random(1..10)
 
   def render(assigns) do
     ~H"""
