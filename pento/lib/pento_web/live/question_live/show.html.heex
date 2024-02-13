@@ -5,6 +5,9 @@
     <.link patch={~p"/questions/#{@question}/show/edit"} phx-click={JS.push_focus()}>
       <.button>Edit question</.button>
     </.link>
+    <.link phx-click={JS.push("upvote", value: %{id: @question.id})}>
+      <.button>Upvote</.button>
+    </.link>
   </:actions>
 </.header>
 
@@ -16,7 +19,12 @@
 
 <.back navigate={~p"/questions"}>Back to questions</.back>
 
-<.modal :if={@live_action == :edit} id="question-modal" show on_cancel={JS.patch(~p"/questions/#{@question}")}>
+<.modal
+  :if={@live_action == :edit}
+  id="question-modal"
+  show
+  on_cancel={JS.patch(~p"/questions/#{@question}")}
+>
   <.live_component
     module={PentoWeb.QuestionLive.FormComponent}
     id={@question.id}

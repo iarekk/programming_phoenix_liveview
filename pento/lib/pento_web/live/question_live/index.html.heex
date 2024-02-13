@@ -29,9 +29,19 @@
       Delete
     </.link>
   </:action>
+  <:action :let={{id, question}}>
+    <.link phx-click={JS.push("upvote", value: %{id: question.id})}>
+      Upvote
+    </.link>
+  </:action>
 </.table>
 
-<.modal :if={@live_action in [:new, :edit]} id="question-modal" show on_cancel={JS.patch(~p"/questions")}>
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="question-modal"
+  show
+  on_cancel={JS.patch(~p"/questions")}
+>
   <.live_component
     module={PentoWeb.QuestionLive.FormComponent}
     id={@question.id || :new}
