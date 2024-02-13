@@ -20,6 +20,7 @@ defmodule PentoWeb.QuestionLive.Show do
   defp page_title(:show), do: "Show Question"
   defp page_title(:edit), do: "Edit Question"
 
+  @impl true
   def handle_event("upvote", %{"id" => id}, socket) do
     question = FrequentlyAskedQuestions.get_question!(id)
     {:ok, _} = FrequentlyAskedQuestions.upvote(question)
