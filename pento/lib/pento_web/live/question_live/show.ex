@@ -2,6 +2,7 @@ defmodule PentoWeb.QuestionLive.Show do
   use PentoWeb, :live_view
 
   alias Pento.FrequentlyAskedQuestions
+  alias Pento.FrequentlyAskedQuestions.Question
 
   @impl true
   def mount(_params, _session, socket) do
@@ -18,4 +19,16 @@ defmodule PentoWeb.QuestionLive.Show do
 
   defp page_title(:show), do: "Show Question"
   defp page_title(:edit), do: "Edit Question"
+
+  def handle_event("upvote", %{"id" => id}, socket) do
+    question = FrequentlyAskedQuestions.get_question!(id)
+    {:ok, _} = FrequentlyAskedQuestions.upvote(question)
+
+    {:noreply,
+     socket
+     |> assign(:question, %Question{
+       question
+       | votes: question.votes + 1
+     })}
+  end
 end

@@ -44,4 +44,13 @@ defmodule PentoWeb.QuestionLive.Index do
 
     {:noreply, stream_delete(socket, :questions, question)}
   end
+
+  @impl true
+  def handle_event("upvote", %{"id" => id}, socket) do
+    question = FrequentlyAskedQuestions.get_question!(id)
+    {:ok, _} = FrequentlyAskedQuestions.upvote(question)
+
+    # TODO this is not very elegant
+    {:noreply, stream_insert(socket, :questions, %Question{question | votes: question.votes + 1})}
+  end
 end

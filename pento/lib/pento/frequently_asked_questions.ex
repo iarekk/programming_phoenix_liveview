@@ -101,4 +101,8 @@ defmodule Pento.FrequentlyAskedQuestions do
   def change_question(%Question{} = question, attrs \\ %{}) do
     Question.changeset(question, attrs)
   end
+
+  def upvote(%Question{votes: votes} = question) do
+    Question.changeset(question, %{votes: votes + 1}) |> Repo.update()
+  end
 end
