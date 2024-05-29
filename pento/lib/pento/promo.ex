@@ -1,0 +1,12 @@
+defmodule Pento.Promo do
+  alias Pento.Promo.Recipient
+
+  def change_recipient(%Recipient{} = recipient, attrs \\ %{}) do
+    Recipient.changeset(recipient, attrs)
+  end
+
+  def send_promo(%Recipient{email: email} = recipient, _attrs) do
+    IO.puts("Sent a promo to #{email}")
+    {:ok, recipient}
+  end
+end
