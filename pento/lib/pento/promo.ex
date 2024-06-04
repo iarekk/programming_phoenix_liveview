@@ -5,8 +5,9 @@ defmodule Pento.Promo do
     Recipient.changeset(recipient, attrs)
   end
 
-  def send_promo(%Recipient{email: email} = recipient, _attrs) do
+  def send_promo(%Recipient{email: email} = _recipient, _attrs) do
     IO.puts("Sent a promo to #{email}")
-    {:ok, recipient}
+    # don't know why we aren't using the recipient param that's passed in...
+    {:ok, %Recipient{}}
   end
 end
