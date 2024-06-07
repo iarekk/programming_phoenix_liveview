@@ -19,9 +19,32 @@ defmodule PentoWeb.PromoLive do
     changeset =
       recipient |> Promo.change_recipient(recipient_params) |> Map.put(:action, :validate)
 
-    Logger.info("handle event recipient params: #{inspect(recipient_params)}")
+    # Logger.info("handle event validate recipient params: #{inspect(recipient_params)}")
 
     {:noreply, assign_form(socket, changeset)}
+  end
+
+  def handle_event(
+        "save",
+        %{"recipient" => recipient_params},
+        %{assigns: %{recipient: recipient}} = socket
+      ) do
+    Logger.info("handle event save recipient params: #{inspect(recipient_params)}")
+    Logger.info("handle event save recipient: #{inspect(recipient)}")
+
+    case Promo.send_promo(recipient, recipient_params) do
+      {:ok, _recipient} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Sent promo!")
+         |> clear_form()}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply,
+         socket
+         |> put_flash(:error, "Failed to send email!")
+         |> assign_form(changeset)}
+    end
   end
 
   def assign_recipient(socket) do
